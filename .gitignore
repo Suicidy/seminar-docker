@@ -1,0 +1,5 @@
+mysql/
+web/
+.DS_Store
+.dockerignore
+docker.code-workspace
