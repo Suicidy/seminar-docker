@@ -7,7 +7,8 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y wget \
     ipython3 \
     python3-pip \
     default-jre \
-    scala
+    scala \
+    git
 
 RUN pip3 install --upgrade pip
 RUN pip3 install \
@@ -30,5 +31,9 @@ RUN mkdir /home/guest/workdir
 
 RUN jupyter notebook --generate-config && \
     cat /tmp/jupyter_notebook_config.txt >> /home/guest/.jupyter/jupyter_notebook_config.py
+
+ENV SPARK_HOME='/home/guest/spark-2.2.1-bin-hadoop2.7'
+ENV PATH=${SPARK_HOME}:$PATH
+ENV PYTHONPATH=${SPARK_HOME}/python:$PYTHONPATH
 
 ENTRYPOINT [ "/bin/bash", "/tmp/start.sh" ]
