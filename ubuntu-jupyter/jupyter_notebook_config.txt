@@ -1,0 +1,4 @@
+c.NotebookApp.password = u'sha1:9c9f1d9b1ee5:66d38fb9639ae30428a463b817fc71bda02d65ca'
+c.NotebookApp.open_browser = False
+c.NotebookApp.ip = '0.0.0.0'
+c.NotebookApp.notebook_dir = '/home/guest/workdir'
