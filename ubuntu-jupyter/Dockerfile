@@ -1,6 +1,10 @@
 FROM ubuntu:latest
 LABEL Name="ubuntu-jupyter" Version=0.1.0
 
+ENV SPARK_HOME='/home/guest/spark-2.2.1-bin-hadoop2.7'
+ENV PATH=${SPARK_HOME}:$PATH
+ENV PYTHONPATH=${SPARK_HOME}/python:$PYTHONPATH
+
 RUN apt-get update -y && apt-get upgrade -y && apt-get install -y wget \
     python3 \
     python3-dev \
@@ -28,12 +32,9 @@ COPY jupyter_notebook_config.txt /tmp/
 USER guest
 RUN mkdir /home/guest/workdir
 
-
 RUN jupyter notebook --generate-config && \
-    cat /tmp/jupyter_notebook_config.txt >> /home/guest/.jupyter/jupyter_notebook_config.py
+   cat /tmp/jupyter_notebook_config.txt >> /home/guest/.jupyter/jupyter_notebook_config.py
 
-ENV SPARK_HOME='/home/guest/spark-2.2.1-bin-hadoop2.7'
-ENV PATH=${SPARK_HOME}:$PATH
-ENV PYTHONPATH=${SPARK_HOME}/python:$PYTHONPATH
+
 
 ENTRYPOINT [ "/bin/bash", "/tmp/start.sh" ]

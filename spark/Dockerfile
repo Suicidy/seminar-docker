@@ -1,8 +1,6 @@
 FROM ubuntu:latest
 LABEL Name="spark" Version=0.0.1
  
-FROM ubuntu:latest
- 
 RUN apt-get -y update && apt-get -y upgrade && apt-get -y install \
     wget \
     software-properties-common
@@ -10,6 +8,7 @@ RUN apt-get -y update && apt-get -y upgrade && apt-get -y install \
 # JAVA
 RUN \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+  add-apt-repository -y ppa:webupd8team/java && \
   apt-get update && \
   apt-get install -y oracle-java8-installer && \
   rm -rf /var/lib/apt/lists/* && \
@@ -23,7 +22,7 @@ ARG SPARK_ARCHIVE=http://www-eu.apache.org/dist/spark/spark-2.2.1/spark-2.2.1-bi
 ENV SPARK_HOME /usr/local/spark-2.2.1-bin-hadoop2.7
  
 ENV PATH $PATH:${SPARK_HOME}/bin
-RUN wget -s ${SPARK_ARCHIVE} -P /tmp 
+RUN wget ${SPARK_ARCHIVE} -P /tmp 
 RUN tar -zxvf tmp/spark-2.2.1-bin-hadoop2.7.tgz -C /usr/local/
  
 WORKDIR $SPARK_HOME
