@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-master
+spec:
+  replicas: 1
+  selector:
+    component: spark-master
+  template:
+    metadata:
+      labels:
+        component: spark-master
+    spec:
+      containers:
+      - name: spark-master
+        image: registryz.azurecr.io/spark:2.20
+        command: ["bin/spark-class"]
+        args: ["org.apache.spark.deploy.master.Master", "-h","spark-master"]
+        ports:
+        - containerPort: 7077
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+      imagePullSecrets:
+      - name: eiei
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spark-master
+spec:
+  ports:
+  - port: 7077
+    targetPort: 7077
+  selector:
+    component: spark-master
