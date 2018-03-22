@@ -19,6 +19,7 @@ spec:
         image: registryz.azurecr.io/ubuntu-jupyter:1.0
         ports:
         - containerPort: 8888
+        - containerPort: 8080
         resources:
           requests:
             cpu: 250m
@@ -30,57 +31,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: jupyter
+  name: jupyter-service
 spec:
   type: LoadBalancer
   ports:
   - port: 8888
+    targetport: 8888
+  - port: 8080
+    targetport: 8080
   selector:
     app: jupyter
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: spark-master
-spec:
-  replicas: 1
-  selector:
-    component: spark-master
-  template:
-    metadata:
-      labels:
-        component: spark-master
-    spec:
-      containers:
-        - name: spark-master
-          image: registryz.azurecr.io/spark:2.20
-          command: ["bin/spark-class"]
-          args: ["org.apache.spark.deploy.master.Master", "-h","spark-master"]
-          ports:
-            - containerPort: 7077
-          resources:
-            requests:
-              cpu: 100m
-      imagePullSecrets:
-      - name: eiei
-      
-
-
-
-
----
-apiVersion: v1
-kind: Pod
-metadata:
-  name: command-demo
-  labels:
-    purpose: demonstrate-command
-spec:
-  containers:
-  - name: command-demo-container
-    image: debian
-    command: ["bin/spark-class"]
-    args: ["org.apache.spark.deploy.master.Master", "-h","spark-master"]
-
-  restartPolicy: OnFailure
 
