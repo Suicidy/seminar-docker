@@ -11,10 +11,12 @@ spec:
     spec:
       containers:
       - name: geo-solution-back
-        image: sregistry.azurecr.io/mysql_server:1.10
+        image: registryz.azurecr.io/mysql_server:latest
         ports:
         - containerPort: 6379
           name: mysql-server
+      imagePullSecrets:
+      - name: eiei
 ---
 apiVersion: v1
 kind: Service
@@ -44,7 +46,7 @@ spec:
     spec:
       containers:
       - name: geo-solution-front
-        image: sregistry.azurecr.io/geoweb_server:1.10
+        image: registryz.azurecr.io/geoweb_server:latest
         ports:
         - containerPort: 80
         resources:
@@ -52,6 +54,8 @@ spec:
             cpu: 250m
           limits:
             cpu: 500m
+      imagePullSecrets:
+      - name: eiei
 ---
 apiVersion: v1
 kind: Service
