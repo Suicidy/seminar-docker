@@ -1,0 +1,86 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: jupyter
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: jupyter
+    spec:
+      containers:
+      - name: jupyter
+        image: registryz.azurecr.io/ubuntu-jupyter:1.0
+        ports:
+        - containerPort: 8888
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+      imagePullSecrets:
+      - name: eiei
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jupyter
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8888
+  selector:
+    app: jupyter
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-master
+spec:
+  replicas: 1
+  selector:
+    component: spark-master
+  template:
+    metadata:
+      labels:
+        component: spark-master
+    spec:
+      containers:
+        - name: spark-master
+          image: registryz.azurecr.io/spark:2.20
+          command: ["bin/spark-class"]
+          args: ["org.apache.spark.deploy.master.Master", "-h","spark-master"]
+          ports:
+            - containerPort: 7077
+          resources:
+            requests:
+              cpu: 100m
+      imagePullSecrets:
+      - name: eiei
+      
+
+
+
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: command-demo
+  labels:
+    purpose: demonstrate-command
+spec:
+  containers:
+  - name: command-demo-container
+    image: debian
+    command: ["bin/spark-class"]
+    args: ["org.apache.spark.deploy.master.Master", "-h","spark-master"]
+
+  restartPolicy: OnFailure
+
