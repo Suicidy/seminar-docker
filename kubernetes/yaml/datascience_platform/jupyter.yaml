@@ -35,11 +35,12 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 
-    - port: 8888
+  - name: jupyter
+    port: 8888
       targetport: 8888
-    - port: 8080
-      targetport: 8080
+  - name: spark-ui 
+    port: 8080
+    targetport: 8080
   selector:
     app: jupyter
 ---
