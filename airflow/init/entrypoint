@@ -1,0 +1,8 @@
+#!/bin/bash
+
+/etc/init.d/postgresql start
+
+/usr/sbin/sshd -D &
+
+/bin/bash /airflow-start.sh
+

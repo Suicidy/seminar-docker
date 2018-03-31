@@ -2,12 +2,17 @@
 
 add_user()
 {
-    useradd -p $2 -ms /bin/bash $1
-    chown -R $1 /home/$1/
+    useradd -m $1
+    echo "$1:$2" | chpasswd
 }
 
 
-add_user 'airflow' 'Ew+2n5KQrt9-aLq8'
+add_user 'airflow'  'Ew+2n5KQrt9-aLq8'
+mkdir -p /home/dags
+mkdir -p /home/airflow/airflow/logs
+chmod 711 /home/airflow
+chmod 777 /home/dags
+
 add_user 'user1' '$FjMC$5$upGga2&S'
 add_user 'user2' 'eSBPL#@_VcTrH37n'
 add_user 'user3' '!*Hw9$D_UCcLjB5&'
