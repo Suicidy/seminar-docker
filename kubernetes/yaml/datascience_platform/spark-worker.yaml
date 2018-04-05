@@ -1,50 +1,53 @@
 apiVersion: apps/v1beta1
-kind: Rep 
+kind: Rep
 metadata:
-  name: spark-master
+  name: spark-worker
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        component: spark-master
+        component: spark-worker
     spec:
       containers:
-      - name: spark-master
+      - name: spark-worker
         image: registryz.azurecr.io/spark:2.20
-        args: #["bin/spark-class","org.apache.spark.deploy.master.Master", "-h","spark-master"]
-        - echo
-        - "$(hostname -i) spark-master"
-        - >>
-        - /etc/hosts
-        - &&
-        - bin/spark-class
-        - org.apache.spark.deploy.master.Master
-        - -h
-        - spark-master
+        command: ["/bin/sh","-c"]
+        args: ["bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077"]
         env:
-        - name: MASTER
-          value: spark://spark-master:7077
         - name: SPARK_CONF_DIR
           value: /conf
+        - name: SPARK_WORKER_PORT
+          value: 8881
+        - name:  SPARK_WORKER_WEBUI_PORT
+          value: 8081
         ports:
-        - containerPort: 7077
+        - containerPort: 8081
         resources:
           requests:
-            cpu: 250m
+            cpu: 200m
           limits:
-            cpu: 500m
+            cpu: 300m
       imagePullSecrets:
       - name: eiei
-      ##
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: spark-master
-# spec:
-#   ports:
-#   - port: 7077
-#     targetPort: 7077
-#   selector:
-#   - component: spark-master
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose --file docker-compose.yml convert
+    kompose.version: 1.10.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: spark-worker
+  name: spark-worker
+spec:
+  ports:
+  - name: "8081"
+    port: 8081
+    targetPort: 8081
+  selector:
+    io.kompose.service: spark-worker
+status:
+  loadBalancer: {}

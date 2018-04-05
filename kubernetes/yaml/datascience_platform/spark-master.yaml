@@ -15,17 +15,6 @@ spec:
         image: registryz.azurecr.io/spark:2.20
         command: ["/bin/sh","-c"]
         args: ["echo $(hostname -i) spark-master >> /etc/hosts && bin/spark-class org.apache.spark.deploy.master.Master -h spark-master"]
-        # - echo
-        # - $(hostname 
-        # - -i) 
-        # - spark-master
-        # - >>
-        # - /etc/hosts
-        # - &&
-        # - bin/spark-class
-        # - org.apache.spark.deploy.master.Master
-        # - -h
-        # - spark-master
         env:
         - name: MASTER
           value: spark://spark-master:7077
@@ -41,13 +30,13 @@ spec:
       imagePullSecrets:
       - name: eiei
 # ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: spark-master
-# spec:
-#   ports:
-#   - port: 7077
-#     targetPort: 7077
-#   selector:
-#   - component: spark-master
+apiVersion: v1
+kind: Service
+metadata:
+  name: spark-master
+spec:
+  ports:
+  - port: 7077
+    targetPort: 7077
+  selector:
+  - component: spark-master
