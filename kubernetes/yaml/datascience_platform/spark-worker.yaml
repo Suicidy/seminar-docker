@@ -30,4 +30,3 @@ spec:
             cpu: 300m
       imagePullSecrets:
       - name: eiei
----

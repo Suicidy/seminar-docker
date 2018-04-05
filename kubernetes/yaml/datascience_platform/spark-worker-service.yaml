@@ -17,4 +17,4 @@ spec:
     io.kompose.service: spark-worker
 status:
   loadBalancer: {}
-  ---
+  
