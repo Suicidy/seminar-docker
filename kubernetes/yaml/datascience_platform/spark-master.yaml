@@ -6,6 +6,7 @@ spec:
   replicas: 1
   template:
     metadata:
+      name: spark-master
       labels:
         component: spark-master
     spec:
@@ -16,7 +17,7 @@ spec:
         # env:
         # - name: MASTER
         #   value: spark://spark-master:7077
-        # - name: SPARK_CONF_DIR
+        # - name: SPARK_CONF_DI R
         #   value: /conf
         ports:
         - containerPort: 7077
