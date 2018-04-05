@@ -19,10 +19,12 @@ spec:
     spec:
       containers:
       - args:
-        - bin/spark-class
-        - org.apache.spark.deploy.master.Master
-        - -h
-        - spark-master
+        - echo
+        - "$spark-master"
+        # - bin/spark-class
+        # - org.apache.spark.deploy.master.Master
+        # - -h
+        # - spark-master
         env:
         - name: MASTER
           value: spark://spark-master:7077
