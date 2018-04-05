@@ -15,7 +15,9 @@ spec:
         image: registryz.azurecr.io/spark:2.20
         args: #["bin/spark-class","org.apache.spark.deploy.master.Master", "-h","spark-master"]
         - echo
-        - "$(hostname -i) spark-master"
+        - "$(hostname 
+        - -i) 
+        - spark-master"
         - >>
         - /etc/hosts
         - &&
