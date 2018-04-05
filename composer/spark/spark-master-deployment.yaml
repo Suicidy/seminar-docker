@@ -28,8 +28,8 @@ spec:
           value: spark://spark-master:7077
         - name: SPARK_CONF_DIR
           value: /conf
-        - name: SPARK_PUBLIC_DNS
-          value: 192.168.99.100
+        # - name: SPARK_PUBLIC_DNS
+        #   value: 192.168.99.100
         image: registryz.azurecr.io/spark:2.20
         name: spark-master
         ports:
