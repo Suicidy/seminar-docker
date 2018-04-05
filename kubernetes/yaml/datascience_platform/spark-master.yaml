@@ -17,7 +17,7 @@ spec:
         env:
         - name: MASTER
           value: spark://spark-master:7077
-        - name: SPARK_CONF_DI R
+        - name: SPARK_CONF_DIR
           value: /conf
         ports:
         - containerPort: 7077
