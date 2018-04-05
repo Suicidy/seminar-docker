@@ -13,18 +13,19 @@ spec:
       containers:
       - name: spark-master
         image: registryz.azurecr.io/spark:2.20
-        args: #["echo $(hostname -i) spark-master >> /etc/hosts && bin/spark-class org.apache.spark.deploy.master.Master -h spark-master"]
-        - echo
-        - $(hostname 
-        - -i) 
-        - spark-master
-        - >>
-        - /etc/hosts
-        - &&
-        - bin/spark-class
-        - org.apache.spark.deploy.master.Master
-        - -h
-        - spark-master
+        command: ["/bin/sh","-c"]
+        args: ["echo $(hostname -i) spark-master >> /etc/hosts && bin/spark-class org.apache.spark.deploy.master.Master -h spark-master"]
+        # - echo
+        # - $(hostname 
+        # - -i) 
+        # - spark-master
+        # - >>
+        # - /etc/hosts
+        # - &&
+        # - bin/spark-class
+        # - org.apache.spark.deploy.master.Master
+        # - -h
+        # - spark-master
         env:
         - name: MASTER
           value: spark://spark-master:7077
