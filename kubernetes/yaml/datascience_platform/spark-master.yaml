@@ -22,7 +22,7 @@ spec:
         - containerPort: 7077
         resources:
           requests:
-            cpu: 250m
+            cpu: 100m
           limits:
             cpu: 500m
       imagePullSecrets:
