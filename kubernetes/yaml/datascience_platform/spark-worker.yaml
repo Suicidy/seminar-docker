@@ -18,9 +18,9 @@ spec:
         - name: SPARK_CONF_DIR
           value: /conf
         - name: SPARK_WORKER_PORT
-          value: 8881
+          value: "8881"
         - name:  SPARK_WORKER_WEBUI_PORT
-          value: 8081
+          value: "8081"
         ports:
         - containerPort: 8081
         resources:
