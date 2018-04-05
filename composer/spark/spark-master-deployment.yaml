@@ -30,7 +30,7 @@ spec:
           value: /conf
         - name: SPARK_PUBLIC_DNS
           value: 192.168.99.100
-        image: spark
+        image: registryz.azurecr.io/spark:2.20
         name: spark-master
         ports:
         - containerPort: 4040
@@ -39,4 +39,6 @@ spec:
         - containerPort: 8080
         resources: {}
       restartPolicy: Always
+      imagePullSecrets:
+      - name: eiei
 status: {}

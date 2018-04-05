@@ -35,10 +35,12 @@ spec:
           value: "8881"
         - name: SPARK_WORKER_WEBUI_PORT
           value: "8081"
-        image: spark
+        image: registryz.azurecr.io/spark:2.20
         name: spark-worker-1
         ports:
         - containerPort: 8081
         resources: {}
       restartPolicy: Always
+      imagePullSecrets:
+      - name: eiei
 status: {}
