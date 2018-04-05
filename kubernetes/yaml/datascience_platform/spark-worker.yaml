@@ -1,0 +1,49 @@
+apiVersion: apps/v1beta1
+kind: Rep 
+metadata:
+  name: spark-master
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: spark-master
+    spec:
+      containers:
+      - name: spark-master
+        image: registryz.azurecr.io/spark:2.20
+        args: #["bin/spark-class","org.apache.spark.deploy.master.Master", "-h","spark-master"]
+        - echo
+        - "$(hostname -i) spark-master"
+        - >>
+        - /etc/hosts
+        - &&
+        - bin/spark-class
+        - org.apache.spark.deploy.master.Master
+        - -h
+        - spark-master
+        env:
+        - name: MASTER
+          value: spark://spark-master:7077
+        - name: SPARK_CONF_DIR
+          value: /conf
+        ports:
+        - containerPort: 7077
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+      imagePullSecrets:
+      - name: eiei
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: spark-master
+# spec:
+#   ports:
+#   - port: 7077
+#     targetPort: 7077
+#   selector:
+#   - component: spark-master
