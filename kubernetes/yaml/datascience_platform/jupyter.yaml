@@ -19,7 +19,6 @@ spec:
         image: registryz.azurecr.io/ubuntu-jupyter:1.0
         ports:
         - containerPort: 8888
-        - containerPort: 8080
         resources:
           requests:
             cpu: 250m
@@ -38,10 +37,6 @@ spec:
   - name: jupyter
     port: 8888
     targetPort: 8888
-  - name: spark-ui 
-    port: 8080
-    targetPort: 8080
   selector:
     app: jupyter
----
 

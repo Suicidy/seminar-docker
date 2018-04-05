@@ -17,7 +17,7 @@ spec:
         command: ["bin/spark-class"]
         args: ["org.apache.spark.deploy.master.Master", "-h","spark-master"]
         ports:
-        - containerPort: 7077
+          - containerPort: 7077
         resources:
           requests:
             cpu: 250m
