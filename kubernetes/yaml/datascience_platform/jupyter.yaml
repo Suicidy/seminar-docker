@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: jupyter
-        image: registryz.azurecr.io/ubuntu-jupyter:1.0
+        image: registryFIN.azurecr.io/ubuntu-jupyter:1.0
         ports:
         - containerPort: 8888
         resources:

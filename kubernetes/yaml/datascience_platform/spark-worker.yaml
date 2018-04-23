@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: spark-worker
-        image: registryz.azurecr.io/spark:2.20
+        image: registryFIN.azurecr.io/spark:2.20
         command: ["/bin/sh","-c"]
         args: ["bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077"]
         env:
