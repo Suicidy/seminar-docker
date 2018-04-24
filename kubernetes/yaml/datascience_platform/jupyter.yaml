@@ -24,8 +24,15 @@ spec:
             cpu: 250m
           limits:
             cpu: 500m
+        volumeMounts:
+        - mountPath: "/home/guest/workdir"
+          name: volume-jupyter
       imagePullSecrets:
       - name: eiei
+      volumes:
+      - name: volume-jupyter
+        persistentVolumeClaim:
+          claimName: azurefile
 ---
 apiVersion: v1
 kind: Service
