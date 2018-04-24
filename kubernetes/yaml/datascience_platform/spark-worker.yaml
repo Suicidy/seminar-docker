@@ -13,7 +13,7 @@ spec:
       - name: spark-worker
         image: registryfin.azurecr.io/spark:2.20
         command: ["/bin/sh","-c"]
-        args: ["bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077"]
+        args: ["bin/spark-class org.apache.spark.deploy.worker.Worker spark://$SPARK_MASTER_SERVICE_HOST:7077"]
         env:
         - name: SPARK_CONF_DIR
           value: /conf
