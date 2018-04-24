@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: spark-master
-        image: registryfin.azurecr.io/spark:2.20
+        image: registryfin.azurecr.io/spark:latest
         command: ["/bin/sh","-c"]
         args: ["echo $(hostname -i) spark-master >> /etc/hosts && bin/spark-class org.apache.spark.deploy.master.Master -h spark-master"]
         env:
