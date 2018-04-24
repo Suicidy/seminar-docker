@@ -24,9 +24,9 @@ spec:
             cpu: 250m
           limits:
             cpu: 500m
-      	volumeMounts:
-      	- mountPath: "/mnt/azurefile/jupyter"
-            name: volume
+        volumeMounts:
+        - mountPath: "/mnt/azurefile/jupyter"
+          name: volume
       imagePullSecrets:
       - name: eiei
       volumes:
