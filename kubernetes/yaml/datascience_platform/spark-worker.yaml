@@ -25,7 +25,7 @@ spec:
         - containerPort: 8081
         resources:
           requests:
-            cpu: 100m
+            cpu: 70m
           limits:
             cpu: 400m
       imagePullSecrets:
