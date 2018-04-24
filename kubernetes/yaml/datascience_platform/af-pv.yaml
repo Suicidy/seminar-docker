@@ -7,7 +7,7 @@ spec:
     - name: myfrontend
       image: nginx
       volumeMounts:
-      - mountPath: "/mnteiei/azure/krub"
+      - mountPath: "/mnt/azure/airflow"
         name: volume
   volumes:
     - name: volume
