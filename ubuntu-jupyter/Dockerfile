@@ -34,9 +34,11 @@ COPY start.sh /tmp/
 COPY jupyter_notebook_config.txt /tmp/
 
 USER guest
+
 RUN mkdir /home/guest/workdir &&\
     jupyter notebook --generate-config && \
     cat /tmp/jupyter_notebook_config.txt >> /home/guest/.jupyter/jupyter_notebook_config.py
+
 
 EXPOSE 8888
 
