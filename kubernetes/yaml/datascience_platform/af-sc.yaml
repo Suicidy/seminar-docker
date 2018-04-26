@@ -1,0 +1,10 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: afstorage
+provisioner: kubernetes.io/azure-file
+mountOptions:
+  - uid=1000
+  - gid=1000
+parameters:
+  storageAccount: ntystorageaccount

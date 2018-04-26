@@ -16,17 +16,23 @@ spec:
     spec:
       containers:
       - name: jupyter
-        image: registryz.azurecr.io/ubuntu-jupyter:1.0
+        image: registryfin.azurecr.io/ubuntu-jupyter:1.0
         ports:
         - containerPort: 8888
-        - containerPort: 8080
         resources:
           requests:
-            cpu: 250m
+            cpu: 100m
           limits:
-            cpu: 500m
+            cpu: 200m
+        volumeMounts:
+        - mountPath: "/home/guest/workdir"
+          name: volume-jupyter
       imagePullSecrets:
       - name: eiei
+      volumes:
+      - name: volume-jupyter
+        persistentVolumeClaim:
+          claimName: azurefile
 ---
 apiVersion: v1
 kind: Service
@@ -38,10 +44,6 @@ spec:
   - name: jupyter
     port: 8888
     targetPort: 8888
-  - name: spark-ui 
-    port: 8080
-    targetPort: 8080
   selector:
     app: jupyter
----
 

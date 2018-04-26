@@ -1,0 +1,32 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: spark-worker
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: spark-worker
+    spec:
+      containers:
+      - name: spark-worker
+        image: registryfin.azurecr.io/spark-master-worker:latest
+        command: ["/bin/sh","-c"]
+        args: ["bin/spark-class org.apache.spark.deploy.worker.Worker spark://$SPARK_MASTER_SERVICE_HOST:7077"]
+        env:
+        - name: SPARK_CONF_DIR
+          value: /conf
+        - name: SPARK_WORKER_PORT
+          value: "8881"
+        - name:  SPARK_WORKER_WEBUI_PORT
+          value: "8081"
+        ports:
+        - containerPort: 8081
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            cpu: 150m
+      imagePullSecrets:
+      - name: eiei
