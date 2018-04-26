@@ -21,9 +21,9 @@ spec:
         - containerPort: 8888
         resources:
           requests:
-            cpu: 250m
+            cpu: 100m
           limits:
-            cpu: 500m
+            cpu: 200m
         volumeMounts:
         - mountPath: "/home/guest/workdir"
           name: volume-jupyter
