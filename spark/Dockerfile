@@ -1,19 +1,15 @@
 FROM ubuntu:16.04
-MAINTAINER innFactory "https://innFactory.de"
-#thanks to gettyimage for this base template!
 
 
-# Users with other locales should set this in their derivative image
 
 RUN apt-get update -qq -y \ 
- && apt-get install -y curl unzip \
-    python3 python3-setuptools wget \
- && ln -s /usr/bin/python3 /usr/bin/python \
- && easy_install3 pip py4j \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+  && apt-get install -y curl unzip \
+  python3 python3-setuptools wget \
+  && ln -s /usr/bin/python3 /usr/bin/python \
+  && easy_install3 pip py4j \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
-# http://blog.stuart.axelbrooke.com/python-3-on-spark-return-of-the-pythonhashseed
 ENV PYTHONHASHSEED 0
 ENV PYTHONIOENCODING UTF-8
 ENV PIP_DISABLE_PIP_VERSION_CHECK 1
@@ -39,12 +35,12 @@ ENV HADOOP_HOME /usr/hadoop-$HADOOP_VERSION
 ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 ENV PATH $PATH:$HADOOP_HOME/bin
 RUN mkdir ${HADOOP_HOME} \
- && wget \
-http://www-us.apache.org/dist/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz \ 
- && tar -xvzf hadoop-${HADOOP_VERSION}.tar.gz -C /tmp \
- && cp -a /tmp/hadoop-${HADOOP_VERSION}/. ${HADOOP_HOME} \
- && rm -rf $HADOOP_HOME/share/doc \
- && chown -R root:root $HADOOP_HOME
+  && wget \
+  http://www-us.apache.org/dist/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz \ 
+  && tar -xvzf hadoop-${HADOOP_VERSION}.tar.gz -C /tmp \
+  && cp -a /tmp/hadoop-${HADOOP_VERSION}/. ${HADOOP_HOME} \
+  && rm -rf $HADOOP_HOME/share/doc \
+  && chown -R root:root $HADOOP_HOME
 
 # SPARK
 ENV SPARK_VERSION 2.2.1
@@ -53,10 +49,10 @@ ENV SPARK_HOME /usr/spark-${SPARK_VERSION}
 ENV SPARK_DIST_CLASSPATH="$HADOOP_HOME/etc/hadoop/*:$HADOOP_HOME/share/hadoop/common/lib/*:$HADOOP_HOME/share/hadoop/common/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/hdfs/lib/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/yarn/lib/*:$HADOOP_HOME/share/hadoop/yarn/*:$HADOOP_HOME/share/hadoop/mapreduce/lib/*:$HADOOP_HOME/share/hadoop/mapreduce/*:$HADOOP_HOME/share/hadoop/tools/lib/*"
 ENV PATH $PATH:${SPARK_HOME}/bin
 RUN mkdir ${SPARK_HOME} \
- && wget http://www-eu.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop2.7.tgz \
- && tar -zxvf spark-${SPARK_VERSION}-bin-hadoop2.7.tgz -C /tmp \
- && cp -a /tmp/spark-${SPARK_VERSION}-bin-hadoop2.7/. ${SPARK_HOME} \
- && chown -R root:root ${SPARK_HOME}
+  && wget http://www-eu.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop2.7.tgz \
+  && tar -zxvf spark-${SPARK_VERSION}-bin-hadoop2.7.tgz -C /tmp \
+  && cp -a /tmp/spark-${SPARK_VERSION}-bin-hadoop2.7/. ${SPARK_HOME} \
+  && chown -R root:root ${SPARK_HOME}
 
 WORKDIR $SPARK_HOME
 CMD ["bin/spark-class", "org.apache.spark.deploy.master.Master"]
